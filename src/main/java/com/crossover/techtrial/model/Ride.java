@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package com.crossover.techtrial.model;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,146 +12,165 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ride")
-public class Ride implements Serializable{
+public class Ride implements Serializable {
 
-  private static final long serialVersionUID = 9097639215351514001L;
+    private static final long serialVersionUID = 9097639215351514001L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @NotNull
-  @Column(name = "start_time")
-  String startTime;
-  
-  @NotNull
-  @Column(name = "end_time")
-  String endTime;
-  
-  @Column(name = "distance")
-  Long distance;
-  
-  @ManyToOne
-  @JoinColumn(name = "driver_id", referencedColumnName = "id")
-  Person driver;
-  
-  @ManyToOne
-  @JoinColumn(name = "rider_id", referencedColumnName = "id")
-  Person rider;
+    @NotNull
+    @Column(name = "start_time")
+    private Instant startTime;
 
-  public Long getId() {
-    return id;
-  }
+    @NotNull
+    @Column(name = "end_time")
+    private Instant endTime;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    @Column(name = "distance")
+    private Long distance;
 
-  public String getStartTime() {
-    return startTime;
-  }
+    @ManyToOne
+    @JoinColumn(name = "driver_id", referencedColumnName = "id")
+    private Person driver;
 
-  public void setStartTime(String startTime) {
-    this.startTime = startTime;
-  }
+    @ManyToOne
+    @JoinColumn(name = "rider_id", referencedColumnName = "id")
+    private Person rider;
 
-  public String getEndTime() {
-    return endTime;
-  }
+    public Ride() {
+    }
 
-  public void setEndTime(String endTime) {
-    this.endTime = endTime;
-  }
+    private Ride(Builder builder) {
+        setId(builder.id);
+        setStartTime(builder.startTime);
+        setEndTime(builder.endTime);
+        setDistance(builder.distance);
+        setDriver(builder.driver);
+        setRider(builder.rider);
+    }
 
-  public Long getDistance() {
-    return distance;
-  }
+    public static Builder newBuilder() {
+        return new Builder();
+    }
 
-  public void setDistance(Long distance) {
-    this.distance = distance;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public Person getDriver() {
-    return driver;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setDriver(Person driver) {
-    this.driver = driver;
-  }
+    public Instant getStartTime() {
+        return startTime;
+    }
 
-  public Person getRider() {
-    return rider;
-  }
+    public void setStartTime(Instant startTime) {
+        this.startTime = startTime;
+    }
 
-  public void setRider(Person rider) {
-    this.rider = rider;
-  }
-  
-  
+    public Instant getEndTime() {
+        return endTime;
+    }
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((distance == null) ? 0 : distance.hashCode());
-    result = prime * result + ((driver == null) ? 0 : driver.hashCode());
-    result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((rider == null) ? 0 : rider.hashCode());
-    result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
-    return result;
-  }
+    public void setEndTime(Instant endTime) {
+        this.endTime = endTime;
+    }
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    Ride other = (Ride) obj;
-    if (distance == null) {
-      if (other.distance != null)
-        return false;
-    } else if (!distance.equals(other.distance))
-      return false;
-    if (driver == null) {
-      if (other.driver != null)
-        return false;
-    } else if (!driver.equals(other.driver))
-      return false;
-    if (endTime == null) {
-      if (other.endTime != null)
-        return false;
-    } else if (!endTime.equals(other.endTime))
-      return false;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (rider == null) {
-      if (other.rider != null)
-        return false;
-    } else if (!rider.equals(other.rider))
-      return false;
-    if (startTime == null) {
-      if (other.startTime != null)
-        return false;
-    } else if (!startTime.equals(other.startTime))
-      return false;
-    return true;
-  }
+    public Long getDistance() {
+        return distance;
+    }
 
-  @Override
-  public String toString() {
-    return "Ride [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", distance=" + distance + ", driver=" + driver + ", rider=" + rider + "]";
-  }
-  
-  
-  
+    public void setDistance(Long distance) {
+        this.distance = distance;
+    }
+
+    public Person getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Person driver) {
+        this.driver = driver;
+    }
+
+    public Person getRider() {
+        return rider;
+    }
+
+    public void setRider(Person rider) {
+        this.rider = rider;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ride ride = (Ride) o;
+        return Objects.equals(id, ride.id) &&
+                Objects.equals(startTime, ride.startTime) &&
+                Objects.equals(endTime, ride.endTime) &&
+                Objects.equals(distance, ride.distance) &&
+                Objects.equals(driver, ride.driver) &&
+                Objects.equals(rider, ride.rider);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startTime, endTime, distance, driver, rider);
+    }
+
+
+    public static final class Builder {
+        private Long id;
+        private @NotNull Instant startTime;
+        private @NotNull Instant endTime;
+        private Long distance;
+        private Person driver;
+        private Person rider;
+
+        private Builder() {
+        }
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setStartTime(@NotNull Instant startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public Builder setEndTime(@NotNull Instant endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
+        public Builder setDistance(Long distance) {
+            this.distance = distance;
+            return this;
+        }
+
+        public Builder setDriver(Person driver) {
+            this.driver = driver;
+            return this;
+        }
+
+        public Builder setRider(Person rider) {
+            this.rider = rider;
+            return this;
+        }
+
+        public Ride build() {
+            return new Ride(this);
+        }
+    }
 }
